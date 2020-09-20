@@ -1,5 +1,8 @@
 package com.gupaoedu.vip;
 
+import com.gupaoedu.vip.discovery.IServiceDiscovery;
+import com.gupaoedu.vip.discovery.ServiceDiscoveryWithZk;
+
 import java.lang.reflect.Proxy;
 
 /**
@@ -8,8 +11,11 @@ import java.lang.reflect.Proxy;
  * @since : 2020-08-18 23:00
  */
 public class RpcProxyClient {
-    public <T> T clientProxy(final Class<T> interfaceCls,final String host,final int port){
+
+    private IServiceDiscovery serviceDiscovery=new ServiceDiscoveryWithZk();
+
+    public <T> T clientProxy(final Class<T> interfaceCls, String version){
        return (T)Proxy.newProxyInstance(interfaceCls.getClassLoader()
-               ,new Class<?>[]{interfaceCls},new RemoteInvocationHandler(host, port));
+               ,new Class<?>[]{interfaceCls},new RemoteInvocationHandler(serviceDiscovery,version));
     }
 }
