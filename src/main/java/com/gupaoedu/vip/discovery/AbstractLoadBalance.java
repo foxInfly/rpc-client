@@ -2,6 +2,7 @@ package com.gupaoedu.vip.discovery;
 
 import java.util.List;
 
+
 public abstract class AbstractLoadBalance implements LoadBalanceStrategy{
     @Override
     public String selectHost(List<String> repos) {
